@@ -1,0 +1,34 @@
+¿Qué forma deberían tener los métodos?
+
+Para el primer comportamiento, que consiste en quitar y dejar disponible un elemento, se implementan dos versiones: 
+una que recibe un int indice y otra que recibe un T elemento. Esto permite mayor flexibilidad, ya que en algunos casos se conoce la 
+posición exacta del elemento, mientras que en otros solo se dispone del objeto. 
+Para el segundo comportamiento, que implica quitar y destruir, se mantienen las mismas firmas pero modificando el tipo de retorno 
+a booleano.
+
+¿Qué valor deberían devolver?
+
+En el primer caso, el método devuelve un T, es decir, el elemento que fue retirado.
+Esto resulta útil cuando se desea reutilizar dicho elemento posteriormente. Por ejemplo, en el método retirarLibro el elemento 
+eliminado se almacena en otra lista (librosquitados). En el segundo caso, es suficiente con un boolean, que indica true si el 
+elemento fue eliminado correctamente o false si no se encontraba en la estructura.
+
+¿Qué pasa con el campo siguiente de un elemento que se retiró?
+
+Al retirar un nodo, su campo siguiente continúa apuntando al nodo posterior. Sin embargo, esto no genera inconvenientes en la 
+implementación, ya que no se retorna el nodo completo sino únicamente su dato mediante getDato(). De esta forma, el nodo queda 
+sin referencias y el Garbage Collector se encarga de liberarlo automáticamente.
+
+¿Qué precauciones debo tomar?
+
+Se deben considerar algunas validaciones básicas. En primer lugar, verificar que la lista no esté vacía antes de intentar 
+eliminar un elemento. En segundo lugar, controlar que el índice sea válido, es decir, mayor o igual a cero y menor que el tamaño de
+la lista. Además, si el elemento no se encuentra, se debe devolver null o false según corresponda. 
+Por último, al eliminar por valor, se considera únicamente la primera aparición del elemento.
+
+Otros comportamientos posibles
+
+Un comportamiento adicional es el del método retirarLibro, en el cual el elemento no se destruye sino que se traslada a otra lista
+(librosquitados). Esto permite continuar trabajando con dichos elementos posteriormente, por ejemplo para su consulta u 
+ordenamiento mediante ordenarLibrosRetirados(). De este modo, la eliminación no implica necesariamente la pérdida del dato, 
+sino que puede representar su reorganización dentro de otra estructura.

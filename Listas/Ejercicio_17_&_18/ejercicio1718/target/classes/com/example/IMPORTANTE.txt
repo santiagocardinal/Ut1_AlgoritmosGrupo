@@ -1,0 +1,56 @@
+package com.example;  
+// Define el paquete donde vive esta clase
+
+import java.io.BufferedReader;  
+// Importa BufferedReader, que lee texto línea por línea de forma eficiente
+
+import java.io.FileReader;  
+// Importa FileReader, que abre y lee archivos de texto
+
+public class App {
+    public static void main(String[] args) {
+
+        FileReader archivo;      
+        // Declara la variable que va a representar el archivo
+
+        BufferedReader lector;   
+        // Declara el lector que va a procesar el archivo línea por línea
+
+        try {
+        // Inicia el bloque try — si algo falla adentro, lo atrapa el catch
+
+            archivo = new FileReader("adquisiciones (1).txt");
+            // Abre el archivo. Si no existe, lanza una excepción y va al catch
+
+            lector = new BufferedReader(archivo);
+            // Envuelve el archivo en un BufferedReader para poder leer línea por línea
+
+            if (archivo.ready())
+            // Verifica que el archivo esté listo para ser leído (no esté vacío ni bloqueado)
+            {
+                
+                String cadena;
+                // Declara la variable que va a guardar cada línea leída
+
+                while ((cadena = lector.readLine()) != null)
+                // Lee una línea y la guarda en cadena
+                // Cuando no hay más líneas, readLine() devuelve null y el while termina
+                {
+                    System.out.println(cadena);
+                    // Imprime la línea actual en consola
+                }
+            }
+            else
+            {
+                System.out.println("El archivo no se ha podido leer");
+                // Si el archivo no está listo, avisa por consola
+            }
+        }
+        catch (Exception e)
+        // Si ocurrió cualquier error dentro del try, llega acá
+        {
+            System.out.println("Error al leer el archivo" + e.getMessage());
+            // Muestra el mensaje de error. e.getMessage() da el detalle del problema
+        }
+    }
+}
