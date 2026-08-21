@@ -28,6 +28,7 @@ class sucursales {
         while ((linea = br.readLine()) != null) {
             linea = linea.trim();
             if (!linea.isEmpty()) {
+                
                 agregar(linea);
             }
         }
