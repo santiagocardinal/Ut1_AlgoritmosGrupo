@@ -141,9 +141,9 @@ public class ColaPrioridad<T> implements TDACola<T>
     }
 
     @Override
-    public boolean agregar(T elem) 
+    public void agregar(T elem) 
     {
-        return poneEnCola(elem, 0);
+        poneEnCola(elem, 0);
     }
 
     @Override
