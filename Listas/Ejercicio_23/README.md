@@ -61,7 +61,7 @@ sucursales. Dada la ciudad `Hong Kong`, la que le sigue en la lista es:
 * c) Queda vacía y da error de ejecución
 * d) Ninguna de las anteriores
 
->Respuesta: D
+>Respuesta: D. 
 
 **4.** Levantar el archivo `suc3.txt` e invocar el método `Imprimir(";")`.
 El resultado esperado es alguna de las siguientes secuencias:

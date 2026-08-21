@@ -1,4 +1,4 @@
-package ucu.edu.aed.tda;
+package com.example;
 
 import java.util.Comparator;
 import java.util.NoSuchElementException;

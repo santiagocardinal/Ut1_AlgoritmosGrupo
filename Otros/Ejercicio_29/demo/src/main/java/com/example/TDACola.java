@@ -1,4 +1,4 @@
-package ucu.edu.aed.tda;
+package com.example;
 
 /**
  * Define un Tipo de Dato Abstracto (TDA) Cola genérica.
@@ -15,9 +15,6 @@ package ucu.edu.aed.tda;
  * @param <T> el tipo de los elementos almacenados en la cola
  */
 public interface TDACola<T> extends TDALista<T> {
-
-    NodoPrioridad<T> frente;
-    int tamano;
 
     /**
      * Retorna el elemento ubicado al frente de la cola, sin removerlo.
@@ -46,7 +43,4 @@ public interface TDACola<T> extends TDALista<T> {
      * @throws java.util.NoSuchElementException si la cola está vacía
      */
     T quitaDeCola();
-
-
-    void anula();
 }
