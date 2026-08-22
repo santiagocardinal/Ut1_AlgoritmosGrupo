@@ -1,4 +1,4 @@
-package ucu.edu.aed.tda;
+package com.example;
 
 public class NodoPrioridad <T> extends Nodo<T>
 {
@@ -7,7 +7,7 @@ public class NodoPrioridad <T> extends Nodo<T>
 
     public NodoPrioridad (T dato, int prioridad)
     {
-        super(dato);
+        super(dato, null);
         this.prioridad = prioridad;
     }
 

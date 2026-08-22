@@ -1,23 +1,22 @@
 package com.example;
 
-import ucu.edu.aed.tda.ColaPrioridad;
-
 public class GestorConvocatoria {
+
+    private static final int CUPOS_TITULARES = 20;
 
     public ResultadoConvocatoria armarConvocatoria(TDALista<Jugador> jugadores) {
         TDALista<Jugador> convocados = new ListaEnlazada<>();
         TDALista<Jugador> suplentes = new ListaEnlazada<>();
+        TDALista<Jugador> habilitados = new ListaEnlazada<>();
         TDALista<Jugador> noHabilitados = new ListaEnlazada<>();
 
         if (jugadores == null || jugadores.esVacio()) {
-            return new ResultadoConvocatoria(convocados, suplentes, 20);
+            return new ResultadoConvocatoria(convocados, suplentes, CUPOS_TITULARES);
         }
-
-        ColaPrioridad<Jugador> colaHabilitados = new ColaPrioridad<>();
 
         for (int i = 0; i < jugadores.tamaño(); i++) {
             Jugador orig = jugadores.obtener(i);
-            
+
             Jugador j = new Jugador(
                 orig.getNombre(),
                 orig.getDivision(),
@@ -27,39 +26,36 @@ public class GestorConvocatoria {
             );
 
             if (j.getEstado() == Estado.HABILITADO) {
-                int prioridadCalculada = (j.getDivision().ordinal() * 10000) 
-                                       - (j.getPartidasJugadas() * 10) 
-                                       - i;
-                
-                colaHabilitados.poneEnCola(j, prioridadCalculada);
+                habilitados.agregar(j);
             } else {
                 noHabilitados.agregar(j);
             }
         }
 
-        while (!colaHabilitados.vacia()) {
-            Jugador mejor = colaHabilitados.quitaDeCola();
-            
-            if (convocados.tamaño() < 20) {
-                convocados.agregar(mejor);
+        TDALista<Jugador> habilitadosOrdenados = habilitados.ordenar(Jugador::compareTo);
+
+
+        for (int i = 0; i < habilitadosOrdenados.tamaño(); i++) {
+            Jugador j = habilitadosOrdenados.obtener(i);
+            if (convocados.tamaño() < CUPOS_TITULARES) {
+                convocados.agregar(j);
             } else {
-                suplentes.agregar(mejor);
+                suplentes.agregar(j);
             }
         }
 
-        if (convocados.tamaño() < 20 && !noHabilitados.esVacio()) {
-            TDALista<Jugador> noHabOrdenados = noHabilitados.ordenar(
-                (j1, j2) -> j2.getDivision().ordinal() - j1.getDivision().ordinal()
-            );
+        if (convocados.tamaño() < CUPOS_TITULARES && !noHabilitados.esVacio()) {
+            TDALista<Jugador> noHabilitadosOrdenados = noHabilitados.ordenar(Jugador::compareTo);
 
-            for (int i = 0; i < noHabOrdenados.tamaño() && convocados.tamaño() < 20; i++) {
-                convocados.agregar(noHabOrdenados.obtener(i));
+            for (int i = 0; i < noHabilitadosOrdenados.tamaño()
+                    && convocados.tamaño() < CUPOS_TITULARES; i++) {
+                convocados.agregar(noHabilitadosOrdenados.obtener(i));
             }
         }
 
         int deficit = 0;
-        if (convocados.tamaño() < 20) {
-            deficit = 20 - convocados.tamaño();
+        if (convocados.tamaño() < CUPOS_TITULARES) {
+            deficit = CUPOS_TITULARES - convocados.tamaño();
         }
 
         return new ResultadoConvocatoria(convocados, suplentes, deficit);
